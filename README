@@ -1,0 +1,48 @@
+research paper found at: 
+
+Library requirements:
+• openAI
+• math
+• json
+• pytorch
+• numpy
+• OpenCv
+• Mediapipe
+• OS
+• math
+
+To begin, follow the steps shown at: https://github.com/wmcnally/golfdb to acquire the necessary
+pre-requisites for the golf sequencing/ image segmentation system.
+
+input gathered amateur golf footage into Amateur-vids at directory golfdb/VideoData
+
+
+All golfDB models other than the one used have been removed, if wanted, generate using “train.py”
+The full video repository has also been removed, only the necessary videos remain, if access to the
+full repository is needed, download at :
+https://drive.google.com/file/d/1uBwRxFxW04EqG87VCoX3l6vXeV5T5JYJ/view
+and place in “data” file
+
+If any problems arise within the image segmentation system, clone the repository shown above and
+insert both “ProfessionalSegmentation” and “AmateurSegmentation” into the golfDB directory.
+Within the GolfDB directory,
+
+To segment the professional golf footage, run “ProfessionalSegmentation.py”
+
+To segment the amateur footage, run “amateur segmentation.py”
+
+The segmented images are stored in their respective files within “ImageData.py”
+
+Go to the Pose_estimation folder stored in the root directory
+
+Run both “AmateurKeypointToJson.py” and “ProfessionalKeypointToJson.py”, this will store the
+keypoint data in respective Json Files.
+
+Run “JsonComparison.py” to find the Top 3 closest golfers in terms of Euclidean distance.
+
+I am aware that this is very rushed documentation, therefore any questions are welcome 
+
+Run “JsonAvg.py” to find the average keypoint data of these 3 golfers.
+
+Go to the root directory and run “feedback.py” to return feedback data.
+
