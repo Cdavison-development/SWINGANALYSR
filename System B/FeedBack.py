@@ -3,7 +3,7 @@ import math
 import openai
 #this system calculates the euclidean distance of the Top3 professional average and the amateur average, this data is entered into an OpenAI NLP prompt 
 #which will return inference on the data
-openai.api_key = "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"
+openai.api_key = "insert openAI key here"
 
 # List of filenames
 filenames = [
