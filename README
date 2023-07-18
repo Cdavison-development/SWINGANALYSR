@@ -1,3 +1,5 @@
+!!documentation is a work in progress and the system will likely not work in the current state!!
+
 research paper found at: https://mega.nz/file/ElJj1QYA#RGF2tecRgPFRti779KoFv5_-Q4DBY-DA8-fQDNEZju8
 
 This documentation is rather rushed so please message if any errors arise
@@ -16,14 +18,17 @@ Library requirements:
 To begin, follow the steps shown at: https://github.com/wmcnally/golfdb to acquire the necessary
 pre-requisites for the golf sequencing/ image segmentation system.
 
-input gathered amateur golf footage into Amateur-vids at directory golfdb/VideoData
+input gathered amateur golf footage into Amateur-vids at directory golfdb/VideoData, The video should be shot at a down-the-line camera angle, the club used should be a driver.
 
-
-All golfDB models other than the one used have been removed, if wanted, generate using “train.py”
-The full video repository has also been removed, only the necessary videos remain, if access to the
-full repository is needed, download at :
+download the full professional golf swing repository and extract the full file to golfdb/data:
 https://drive.google.com/file/d/1uBwRxFxW04EqG87VCoX3l6vXeV5T5JYJ/view
-and place in “data” file
+
+run filedeleter.py to cleanse the professional dataset so only videos in which the subject uses a down-the-line camera angle and the driver club left,
+move remaining video files to golfdb/VideoData/Fast_Drive_DTL.
+
+download the Golfdb implementation of the swingnet baseline model and place file into golfdb/models (do not attempt to unzip): 
+https://drive.google.com/file/d/1MBIDwHSM8OKRbxS8YfyRLnUBAdt0nupW/view 
+
 
 If any problems arise within the image segmentation system, clone the repository shown above and
 insert both “ProfessionalSegmentation” and “AmateurSegmentation” into the golfDB directory.
