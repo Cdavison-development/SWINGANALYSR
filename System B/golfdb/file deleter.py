@@ -7,7 +7,7 @@ import csv
 import os
 
 # File names to check against
-filename = "data/DownTheLineList.csv"
+filename = "data/csv lists/DownTheLineList.csv"
 
 # List to store potential names
 potential_names = []
@@ -19,7 +19,7 @@ with open(filename, "r") as file:
         potential_names.append(row[2])
 
 # Directory to check for files
-dir_path = "data/Fast_Drive"
+dir_path = "data/videos_160"
 
 # Loop through all the files in the directory
 for file_name in os.listdir(dir_path):
