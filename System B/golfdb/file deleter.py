@@ -7,7 +7,7 @@ import csv
 import os
 
 # File names to check against
-filename = "data/csv lists/DownTheLineList.csv"
+filename = "data/DownTheLineList.csv"
 
 # List to store potential names
 potential_names = []
