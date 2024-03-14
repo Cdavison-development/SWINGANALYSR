@@ -58,6 +58,10 @@ Run “JsonComparison.py” to find the Top 3 closest golfers in terms of Euclid
 
 I am aware that this is very rushed documentation, therefore any questions are welcome 
 
+
+The code in this repository is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.
+
+
 Run “JsonAvg.py” to find the average keypoint data of these 3 golfers.
 
 Go to the root directory and run “feedback.py” to return feedback data.
