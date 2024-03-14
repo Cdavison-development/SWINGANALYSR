@@ -140,8 +140,11 @@ if __name__ == '__main__':
             cv2.putText(img, '{:.3f}'.format(confidence[i]), (20, 20), cv2.FONT_HERSHEY_DUPLEX, 0.75, (0, 0, 255))
             #cv2.imshow(event_names[i], img)              
             cv2.imwrite("ImageData/Am_Swing_events/"  + label[i] + "/" + event_names[i] + str(fileitr) + ".jpg", img)
+            # Construct the file path where the image will be saved
+            image_save_path = f"ImageData/Am_Swing_events/{label[i]}/{event_names[i]}{str(fileitr)}.jpg"
+            print(f'Image saved to: {image_save_path}')
             #writeToStr = "data/amateur_data/"  + label[i] + ' Confidence: {}'.format([np.round(c, 3) for c in confidence]) + "/" + event_names[i] +""+ str(fileitr) + ".jpg", img
-            #print('sending to : '+ writeToStr)
+            #print('sending to : '+ str(writeToStr))
             cv2.waitKey(0)
             cv2.destroyAllWindows()
     

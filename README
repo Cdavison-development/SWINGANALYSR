@@ -4,15 +4,13 @@ Credits to William MCnally for GOLFDB, a Swing segmentation system: https://gith
 
 The pose estimation code in this repository is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.
 
-quick note: Im seeing alot of unique viewers on this repo and I have no idea where this attention is coming from :satisfied: ,
+quick note: Im seeing alot of unique viewers on this repo and I have no idea where this attention is coming from 😆 ,
 if some of you could let me know where the attention is coming from it would be much appreciated.
-(where are the facebook users coming from ?! :sweat_smile:)
+(where are the facebook users coming from ?! 😅)
 
-!!documentation is a work in progress and the system will likely not work in the current state!!
 
 research paper found at: https://mega.nz/file/ElJj1QYA#RGF2tecRgPFRti779KoFv5_-Q4DBY-DA8-fQDNEZju8
 
-This documentation is rather rushed so please message if any errors arise
 
 Library requirements:
 • openAI
@@ -24,43 +22,70 @@ Library requirements:
 • Mediapipe
 • OS
 • math
+pandas
 
-To begin, follow the steps shown at: https://github.com/wmcnally/golfdb to acquire the necessary
-pre-requisites for the golf sequencing/ image segmentation system.
+you should be able to install all dependencies (other than pytorch) without prior setup.
 
-input gathered amateur golf footage into Amateur-vids at directory golfdb/VideoData, The video should be shot at a down-the-line camera angle, the club used should be a driver.
+use openai version 0.28
 
-download the full professional golf swing repository and extract the full file to golfdb/data:
+to set up pytorch, it is recommended that you have a CUDA capable GPU, download CUDA 11.8 from : 
+https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Windows&target_arch=x86_64&target_version=11&target_type=exe_local
+
+you will also need python 3.10.0
+https://www.python.org/downloads/release/python-3100/
+
+install pytorch from using pip install torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 --index-url https://download.pytorch.org/whl/cu118
+
+using different versions of CUDA/python may work, but this is what worked for me
+
+now that the packages are sorted, we can begin
+
+input gathered amateur golf footage into directory golfdb/VideoData/Amateur-vids, The video should be shot at a down-the-line camera angle, the club used should be a driver.
+This footage should be of one individual
+
+download the full professional golf swing repository and extract the full file to golfdb/VideoData/Pro_vids:
 https://drive.google.com/file/d/1uBwRxFxW04EqG87VCoX3l6vXeV5T5JYJ/view
 
-run filedeleter.py to cleanse the professional dataset so only videos in which the subject uses a down-the-line camera angle and the driver club left,
-move remaining video files to golfdb/VideoData/Fast_Drive_DTL.
+you should now have the directory: golfdb\VideoData\Pro_vids\videos_160 , in which all professional golf videos are stored.
 
-download the Golfdb implementation of the swingnet baseline model and place file into golfdb/models (do not attempt to unzip): 
-https://drive.google.com/file/d/1MBIDwHSM8OKRbxS8YfyRLnUBAdt0nupW/view 
+run file_deleter.py
 
+This script works by checking the names of videos I have identified as using a down the line golf camera angle, where the footage is sped up,
+and the golfer is using the driver club. If you wanted to use different parameters, you would have to go through the unchanged golfDB 
+professional golf video dataset, and list the videos you do not want to delete in the same format as in data/filenames.csv
 
-If any problems arise within the image segmentation system, clone the repository shown above and
-insert both “ProfessionalSegmentation” and “AmateurSegmentation” into the golfDB directory.
-Within the GolfDB directory,
+so now, Pro_vids/videos_160 should only contain videos with the footage we want to keep, as specified in data/filenames.csv
 
-To segment the professional golf footage, run “ProfessionalSegmentation.py”
+if the file "models" is empty, download model weights from https://drive.google.com/file/d/1MBIDwHSM8OKRbxS8YfyRLnUBAdt0nupW/view 
+(this maybe the case as I am unsure of github max upload sizes atm) 
 
-To segment the amateur footage, run “amateur segmentation.py”
+run both AmateurSegmentation and ProfessionalSegmentation
 
-The segmented images are stored in their respective files within “ImageData.py”
+the folders within the "ImageData" folder should now have images for each moment of swing for both the amateur and professional videosets.
 
-Go to the Pose_estimation folder stored in the root directory
+go to the Pose_estimation folder in the root directory
 
 Run both “AmateurKeypointToJson.py” and “ProfessionalKeypointToJson.py”, this will store the
 keypoint data in respective Json Files.
 
-Run “JsonComparison.py” to find the Top 3 closest golfers in terms of Euclidean distance.
+Since the goal of this system is to compare one amateur to many professionals, the AmateurKeyPointData will return individual keypoint, while the 
+ProfessionalKeypointData will be have multiple jsons for each moment of swing, for each professional
 
-I am aware that this is very rushed documentation, therefore any questions are welcome 
+also, sometimes AmateurKeypointToJson will not create the files, but instead request a file path, unsure why this happens
 
+Run JsonComparison, this will find the 3 professionals that have the closest swing to the amateur, for ease of comparison.
 
-Run “JsonAvg.py” to find the average keypoint data of these 3 golfers.
+Run JsonAvg
+This function finds the mean of these 3 professionals and this data is what is compared to our amateur keypoint data to find the feedback
 
 Go to the root directory and run “feedback.py” to return feedback data.
+
+
+If you want to use another test subject, you will need to run "amateurCleaner.py", all data relating to the amateur individual will be deleted.
+
+If you want to change the comparison data, then you should use "ProfessionalCleaner.py", however this shouldnt be too necassary unless you want to
+use a different video dataset.
+
+
+
 

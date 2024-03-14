@@ -3,7 +3,7 @@ import math
 import openai
 #this system calculates the euclidean distance of the Top3 professional average and the amateur average, this data is entered into an OpenAI NLP prompt 
 #which will return inference on the data
-openai.api_key = "insert openAI key here"
+openai.api_key = ""
 
 # List of filenames
 filenames = [
@@ -85,7 +85,7 @@ for filename in filenames:
 
     
 
-    #generates feedback by prompting text-davinci-003 with keypoint differences between amateur and professional average
+    #generates feedback by prompting gpt-3.5-turbo with keypoint differences between amateur and professional average
     def generate_feedback(list_name, original_values):
         feedback = []
 
@@ -97,26 +97,23 @@ for filename in filenames:
             diff_x = amateur_coords[0] - pro_coords[0]
             diff_y = amateur_coords[1] - pro_coords[1]
             diff_z = amateur_coords[2] - pro_coords[2]
-            #print(diff_x , diff_y , diff_z)
+
             prompt = (f"For the {keypoint_description} (keypoint {keypoint}), the amateur data coordinates are {amateur_coords}, and the professional data coordinates are {pro_coords}. "
-                  f"The differences in x, y, and z are {diff_x}, {diff_y}, and {diff_z}, respectively. "
-                  f"How can the user improve their golf swing based on this data?, do not return data that references specific x, y or z values, or the professional swing, instead make inferences based on these values")
+                    f"The differences in x, y, and z are {diff_x}, {diff_y}, and {diff_z}, respectively. "
+                    f"How can the user improve their golf swing based on this data?, do not return data that references specific x, y or z values, or the professional swing, instead make inferences based on these values")
 
-            response = openai.Completion.create(
-                engine="text-davinci-003",
-                prompt=prompt,
-                max_tokens=400,
-                n=1,
-                stop=None,
-                temperature=0.8,
-                
-                )
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.8
+            )
 
-            feedback_item = response.choices[0].text.strip()
+            feedback_item = response['choices'][0]['message']['content'].strip()
             feedback.append(feedback_item)
-            
-            #num_tokens = num_tokens_from_string(item, "p50k_base")
-            #print(num_tokens)
+
         return feedback
 
     #feedback is returned
